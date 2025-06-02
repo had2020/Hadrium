@@ -1,2 +1,2 @@
 # Hadrium
-Vim-clone in rewritten in Rust, made with inhouse frameworks
+Vim-clone rewritten in Rust, made with in-house frameworks
