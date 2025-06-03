@@ -63,12 +63,16 @@ fn main() {
         // Replace mode
         if key_press(&app, "R") {
             primary_mode = PrimaryMode::ReplaceMode;
-            line(Position { x: 0, y: 5 }, "Command", "red");
+            line(Position { x: 0, y: 5 }, "Replace", "red");
         }
 
         if key_press(&app, "q") {
             clear();
             break;
+        }
+
+        if key_press(&app, "unknown") {
+            // TODO bebug message
         }
     }
 
