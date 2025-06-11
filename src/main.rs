@@ -1,3 +1,5 @@
+use std::io::{stdout, Write};
+
 use ::TerimalRtdm::*;
 
 fn load_confi_file() {}
@@ -20,60 +22,95 @@ enum PrimaryMode {
 fn main() {
     let mut primary_mode: PrimaryMode = PrimaryMode::NormalMode;
 
-    clear();
     let mut app = App::new();
+    clear(&mut app);
 
     raw_line("Welcome to Hadrium");
 
     raw_mode(true);
+    clear(&mut app);
 
     loop {
-        clear();
         collect_presses(&mut app);
 
         // Normal mode
         if key_press(&app, "Esc") {
             primary_mode = PrimaryMode::NormalMode;
-            line(Position { x: 0, y: 5 }, "Normal", "blue");
+            Text::new()
+                .foreground(Color::Green)
+                .background(Color::White)
+                .style(Style::Bold)
+                .show(&mut app, "Normal", pos!(0, 0));
+            Text::new().show(&mut app, "Test1", pos!(0, 1));
+            Text::new().show(&mut app, "Test2", pos!(0, 2));
         }
 
         // Insert mode
         if key_press(&app, "i") {
             primary_mode = PrimaryMode::InsertMode;
-            line(Position { x: 0, y: 5 }, "Insert", "red");
+            Text::new()
+                .foreground(Color::Red)
+                .background(Color::White)
+                .style(Style::Bold)
+                .show(&mut app, "Insert", pos!(0, 0));
         }
 
         // Visual mode
         if key_press(&app, "v") {
             primary_mode = PrimaryMode::VisualMode;
-            line(Position { x: 0, y: 5 }, "Visual", "yellow");
+            Text::new()
+                .foreground(Color::Blue)
+                .background(Color::White)
+                .style(Style::Bold)
+                .show(&mut app, "Visual", pos!(0, 0));
         }
         if key_press(&app, "V") {
             primary_mode = PrimaryMode::VisualMode;
-            line(Position { x: 0, y: 5 }, "Visual", "yellow");
+            Text::new()
+                .foreground(Color::Green)
+                .background(Color::White)
+                .style(Style::Bold)
+                .show(&mut app, "Visual", pos!(0, 0));
         }
-        //TODO Ctrl+v
 
         // Command mode
         if key_press(&app, ":") {
             primary_mode = PrimaryMode::CommandLineMode;
-            line(Position { x: 0, y: 5 }, "Command", "red");
+            Text::new()
+                .foreground(Color::Yellow)
+                .background(Color::White)
+                .style(Style::Bold)
+                .show(&mut app, "Command", pos!(0, 0));
+
+            //TODO fix this case
+            if key_press(&app, "q") {
+                clear(&mut app);
+                break;
+            }
         }
 
         // Replace mode
         if key_press(&app, "R") {
             primary_mode = PrimaryMode::ReplaceMode;
-            line(Position { x: 0, y: 5 }, "Replace", "red");
+            Text::new()
+                .foreground(Color::Magenta)
+                .background(Color::White)
+                .style(Style::Bold)
+                .show(&mut app, "Replace", pos!(0, 0));
         }
 
+        /*
         if key_press(&app, "q") {
-            clear();
+            clear(&mut app);
             break;
         }
+        */
 
-        if key_press(&app, "unknown") {
-            // TODO bebug message
+        if key_press(&app, "e") {
+            move_cursor(&mut app, pos!(0, 5));
         }
+
+        render(&app);
     }
 
     raw_mode(false);
