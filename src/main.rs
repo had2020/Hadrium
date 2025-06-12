@@ -10,6 +10,7 @@ fn open_file() {}
 
 fn backup_file() {}
 
+#[derive(PartialEq)]
 enum PrimaryMode {
     NormalMode,
     InsertMode,
@@ -34,7 +35,7 @@ fn main() {
         collect_presses(&mut app);
 
         // Normal mode
-        if key_press(&app, "Esc") {
+        if Key::o().pressed(&mut app, "Esc") {
             primary_mode = PrimaryMode::NormalMode;
             Text::new()
                 .foreground(Color::Green)
@@ -46,7 +47,7 @@ fn main() {
         }
 
         // Insert mode
-        if key_press(&app, "i") {
+        if Key::o().pressed(&mut app, "i") {
             primary_mode = PrimaryMode::InsertMode;
             Text::new()
                 .foreground(Color::Red)
@@ -56,7 +57,7 @@ fn main() {
         }
 
         // Visual mode
-        if key_press(&app, "v") {
+        if Key::o().case_sen(true).pressed(&mut app, "v") {
             primary_mode = PrimaryMode::VisualMode;
             Text::new()
                 .foreground(Color::Blue)
@@ -64,33 +65,18 @@ fn main() {
                 .style(Style::Bold)
                 .show(&mut app, "Visual", pos!(0, 0));
         }
-        if key_press(&app, "V") {
-            primary_mode = PrimaryMode::VisualMode;
-            Text::new()
-                .foreground(Color::Green)
-                .background(Color::White)
-                .style(Style::Bold)
-                .show(&mut app, "Visual", pos!(0, 0));
-        }
-
         // Command mode
-        if key_press(&app, ":") {
+        if Key::o().pressed(&mut app, ":") {
             primary_mode = PrimaryMode::CommandLineMode;
             Text::new()
                 .foreground(Color::Yellow)
                 .background(Color::White)
                 .style(Style::Bold)
                 .show(&mut app, "Command", pos!(0, 0));
-
-            //TODO fix this case
-            if key_press(&app, "q") {
-                clear(&mut app);
-                break;
-            }
         }
 
         // Replace mode
-        if key_press(&app, "R") {
+        if Key::o().pressed(&mut app, "R") {
             primary_mode = PrimaryMode::ReplaceMode;
             Text::new()
                 .foreground(Color::Magenta)
@@ -99,14 +85,14 @@ fn main() {
                 .show(&mut app, "Replace", pos!(0, 0));
         }
 
-        /*
-        if key_press(&app, "q") {
-            clear(&mut app);
-            break;
+        if primary_mode == PrimaryMode::CommandLineMode {
+            if Key::o().pressed(&mut app, "q") {
+                clear(&mut app);
+                break;
+            }
         }
-        */
 
-        if key_press(&app, "e") {
+        if Key::o().pressed(&mut app, "e") {
             move_cursor(&mut app, pos!(0, 5));
         }
 
