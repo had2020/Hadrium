@@ -65,6 +65,7 @@ fn main() {
                 .style(Style::Bold)
                 .show(&mut app, "Visual", pos!(0, 0));
         }
+
         // Command mode
         if Key::o().pressed(&mut app, ":") {
             primary_mode = PrimaryMode::CommandLineMode;
@@ -75,6 +76,13 @@ fn main() {
                 .show(&mut app, "Command", pos!(0, 0));
         }
 
+        if primary_mode == PrimaryMode::CommandLineMode {
+            if Key::o().pressed(&mut app, "q") {
+                clear(&mut app);
+                break;
+            }
+        }
+
         // Replace mode
         if Key::o().pressed(&mut app, "R") {
             primary_mode = PrimaryMode::ReplaceMode;
@@ -83,13 +91,6 @@ fn main() {
                 .background(Color::White)
                 .style(Style::Bold)
                 .show(&mut app, "Replace", pos!(0, 0));
-        }
-
-        if primary_mode == PrimaryMode::CommandLineMode {
-            if Key::o().pressed(&mut app, "q") {
-                clear(&mut app);
-                break;
-            }
         }
 
         if Key::o().pressed(&mut app, "e") {
