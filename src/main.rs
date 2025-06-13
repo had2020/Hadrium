@@ -38,8 +38,8 @@ fn main() {
         if Key::o().pressed(&mut app, "Esc") {
             primary_mode = PrimaryMode::NormalMode;
             Text::new()
-                .foreground(Color::Green)
-                .background(Color::White)
+                .foreground(Color::Black)
+                .background(Color::Green)
                 .style(Style::Bold)
                 .show(&mut app, "Normal", pos!(0, 0));
         }
@@ -48,8 +48,8 @@ fn main() {
         if Key::o().pressed(&mut app, "i") {
             primary_mode = PrimaryMode::InsertMode;
             Text::new()
-                .foreground(Color::Red)
-                .background(Color::White)
+                .foreground(Color::Black)
+                .background(Color::Red)
                 .style(Style::Bold)
                 .show(&mut app, "Insert", pos!(0, 0));
 
@@ -66,8 +66,8 @@ fn main() {
         if Key::o().case_sen(true).pressed(&mut app, "v") {
             primary_mode = PrimaryMode::VisualMode;
             Text::new()
-                .foreground(Color::Blue)
-                .background(Color::White)
+                .foreground(Color::Black)
+                .background(Color::Blue)
                 .style(Style::Bold)
                 .show(&mut app, "Visual", pos!(0, 0));
         }
@@ -76,8 +76,8 @@ fn main() {
         if Key::o().pressed(&mut app, ":") {
             primary_mode = PrimaryMode::CommandLineMode;
             Text::new()
-                .foreground(Color::Yellow)
-                .background(Color::White)
+                .foreground(Color::Black)
+                .background(Color::Yellow)
                 .style(Style::Bold)
                 .show(&mut app, "Command", pos!(0, 0));
         }
@@ -93,23 +93,23 @@ fn main() {
         if Key::o().pressed(&mut app, "R") {
             primary_mode = PrimaryMode::ReplaceMode;
             Text::new()
-                .foreground(Color::Magenta)
-                .background(Color::White)
+                .foreground(Color::Black)
+                .background(Color::Magenta)
                 .style(Style::Bold)
                 .show(&mut app, "Replace", pos!(0, 0));
         }
 
         if Key::o().no_clear().pressed(&mut app, "w") {
-            mov_cur_dir(&mut app, Dir::Up, 1);
+            Mov::cur().wrap().dir(&mut app, Dir::Up, 1);
         }
         if Key::o().no_clear().pressed(&mut app, "s") {
-            mov_cur_dir(&mut app, Dir::Down, 1);
+            Mov::cur().wrap().dir(&mut app, Dir::Down, 1);
         }
         if Key::o().no_clear().pressed(&mut app, "a") {
-            mov_cur_dir(&mut app, Dir::Left, 1);
+            Mov::cur().wrap().dir(&mut app, Dir::Left, 1);
         }
         if Key::o().no_clear().pressed(&mut app, "d") {
-            mov_cur_dir(&mut app, Dir::Right, 1);
+            Mov::cur().wrap().dir(&mut app, Dir::Right, 1);
         }
 
         render(&app);
