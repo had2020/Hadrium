@@ -42,8 +42,6 @@ fn main() {
                 .background(Color::White)
                 .style(Style::Bold)
                 .show(&mut app, "Normal", pos!(0, 0));
-            Text::new().show(&mut app, "Test1", pos!(0, 1));
-            Text::new().show(&mut app, "Test2", pos!(0, 2));
         }
 
         // Insert mode
@@ -54,6 +52,14 @@ fn main() {
                 .background(Color::White)
                 .style(Style::Bold)
                 .show(&mut app, "Insert", pos!(0, 0));
+
+            // written text TODO
+            Text::new()
+                .vanish(false)
+                .show(&mut app, "Test1", pos!(0, 1));
+            Text::new()
+                .vanish(false)
+                .show(&mut app, "Test2", pos!(0, 2));
         }
 
         // Visual mode
@@ -93,8 +99,17 @@ fn main() {
                 .show(&mut app, "Replace", pos!(0, 0));
         }
 
-        if Key::o().pressed(&mut app, "e") {
-            move_cursor(&mut app, pos!(0, 5));
+        if Key::o().no_clear().pressed(&mut app, "w") {
+            mov_cur_dir(&mut app, Dir::Up, 1);
+        }
+        if Key::o().no_clear().pressed(&mut app, "s") {
+            mov_cur_dir(&mut app, Dir::Down, 1);
+        }
+        if Key::o().no_clear().pressed(&mut app, "a") {
+            mov_cur_dir(&mut app, Dir::Left, 1);
+        }
+        if Key::o().no_clear().pressed(&mut app, "d") {
+            mov_cur_dir(&mut app, Dir::Right, 1);
         }
 
         render(&app);
