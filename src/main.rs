@@ -17,7 +17,7 @@ enum PrimaryMode {
     VisualMode,
     CommandLineMode,
     ReplaceMode,
-    SelectMode,
+    //SelectMode,
 }
 
 fn main() {
@@ -35,7 +35,7 @@ fn main() {
         collect_presses(&mut app);
 
         // Normal mode
-        if Key::o().pressed(&mut app, "Esc") {
+        if Key::o().pressed(&mut app, KeyType::Esc) {
             primary_mode = PrimaryMode::NormalMode;
             Text::new()
                 .foreground(Color::Black)
@@ -45,7 +45,7 @@ fn main() {
         }
 
         // Insert mode
-        if Key::o().pressed(&mut app, "i") {
+        if Key::o().pressed(&mut app, KeyType::i) {
             primary_mode = PrimaryMode::InsertMode;
             Text::new()
                 .foreground(Color::Black)
@@ -63,7 +63,7 @@ fn main() {
         }
 
         // Visual mode
-        if Key::o().case_sen(true).pressed(&mut app, "v") {
+        if Key::o().case_sen(true).pressed(&mut app, KeyType::v) {
             primary_mode = PrimaryMode::VisualMode;
             Text::new()
                 .foreground(Color::Black)
@@ -73,7 +73,7 @@ fn main() {
         }
 
         // Command mode
-        if Key::o().pressed(&mut app, ":") {
+        if Key::o().pressed(&mut app, KeyType::Colon) {
             primary_mode = PrimaryMode::CommandLineMode;
             Text::new()
                 .foreground(Color::Black)
@@ -83,14 +83,14 @@ fn main() {
         }
 
         if primary_mode == PrimaryMode::CommandLineMode {
-            if Key::o().pressed(&mut app, "q") {
+            if Key::o().pressed(&mut app, KeyType::q) {
                 clear(&mut app);
                 break;
             }
         }
 
         // Replace mode
-        if Key::o().pressed(&mut app, "R") {
+        if Key::o().pressed(&mut app, KeyType::R) {
             primary_mode = PrimaryMode::ReplaceMode;
             Text::new()
                 .foreground(Color::Black)
@@ -99,16 +99,16 @@ fn main() {
                 .show(&mut app, "Replace", pos!(0, 0));
         }
 
-        if Key::o().no_clear().pressed(&mut app, "w") {
+        if Key::o().no_clear().pressed(&mut app, KeyType::w) {
             Mov::cur().wrap().dir(&mut app, Dir::Up, 1);
         }
-        if Key::o().no_clear().pressed(&mut app, "s") {
+        if Key::o().no_clear().pressed(&mut app, KeyType::s) {
             Mov::cur().wrap().dir(&mut app, Dir::Down, 1);
         }
-        if Key::o().no_clear().pressed(&mut app, "a") {
+        if Key::o().no_clear().pressed(&mut app, KeyType::a) {
             Mov::cur().wrap().dir(&mut app, Dir::Left, 1);
         }
-        if Key::o().no_clear().pressed(&mut app, "d") {
+        if Key::o().no_clear().pressed(&mut app, KeyType::d) {
             Mov::cur().wrap().dir(&mut app, Dir::Right, 1);
         }
 
