@@ -1,14 +1,14 @@
-use std::io::{stdout, Write};
-
 use ::TerimalRtdm::*;
 
-fn load_confi_file() {}
+use std::io::{stdout, Write}; //TODO Usage
 
-fn save_file() {}
+fn load_confi_file() {} //TODO
 
-fn open_file() {}
+fn save_file() {} //TODO
 
-fn backup_file() {}
+fn open_file() {} //TODO
+
+fn backup_file() {} //TODO
 
 #[derive(PartialEq)]
 enum PrimaryMode {
@@ -99,20 +99,58 @@ fn main() {
                 .show(&mut app, "Replace", pos!(0, 0));
         }
 
-        if Key::o().no_clear().pressed(&mut app, KeyType::w) {
-            Mov::cur().wrap().dir(&mut app, Dir::Up, 1);
-        }
-        if Key::o().no_clear().pressed(&mut app, KeyType::s) {
-            Mov::cur().wrap().dir(&mut app, Dir::Down, 1);
-        }
-        if Key::o().no_clear().pressed(&mut app, KeyType::a) {
-            Mov::cur().wrap().dir(&mut app, Dir::Left, 1);
-        }
-        if Key::o().no_clear().pressed(&mut app, KeyType::d) {
-            Mov::cur().wrap().dir(&mut app, Dir::Right, 1);
+        if primary_mode == PrimaryMode::NormalMode {
+            // Vim directional
+            if Key::o().no_clear().pressed(&mut app, KeyType::k) {
+                Mov::cur().dir(&mut app, Dir::Up, 1); //Todo block impl of wrap
+            }
+            if Key::o().no_clear().pressed(&mut app, KeyType::j) {
+                Mov::cur().dir(&mut app, Dir::Down, 1);
+            }
+            if Key::o().no_clear().pressed(&mut app, KeyType::h) {
+                Mov::cur().dir(&mut app, Dir::Left, 1);
+            }
+            if Key::o().no_clear().pressed(&mut app, KeyType::l) {
+                Mov::cur().dir(&mut app, Dir::Right, 1);
+            }
+
+            // Arrow directional
+            if Key::o().no_clear().pressed(&mut app, KeyType::UpArrow) {
+                Mov::cur().dir(&mut app, Dir::Up, 1);
+            }
+            if Key::o().no_clear().pressed(&mut app, KeyType::DownArrow) {
+                Mov::cur().dir(&mut app, Dir::Down, 1);
+            }
+            if Key::o().no_clear().pressed(&mut app, KeyType::LeftArrow) {
+                Mov::cur().dir(&mut app, Dir::Left, 1);
+            }
+            if Key::o().no_clear().pressed(&mut app, KeyType::RightArrow) {
+                Mov::cur().dir(&mut app, Dir::Right, 1);
+            }
         }
 
-        render(&app);
+        if primary_mode == PrimaryMode::InsertMode {
+            //println!("{:?}", key_pressed(&app));
+
+            println!("{:?}", debug_code_pressed(&mut app));
+            /*
+            // Arrow directional with wrap
+            if Key::o().no_clear().pressed(&mut app, KeyType::UpArrow) {
+                Mov::cur().wrap().dir(&mut app, Dir::Up, 1);
+            }
+            if Key::o().no_clear().pressed(&mut app, KeyType::DownArrow) {
+                Mov::cur().wrap().dir(&mut app, Dir::Down, 1);
+            }
+            if Key::o().no_clear().pressed(&mut app, KeyType::LeftArrow) {
+                Mov::cur().wrap().dir(&mut app, Dir::Left, 1);
+            }
+            if Key::o().no_clear().pressed(&mut app, KeyType::RightArrow) {
+                Mov::cur().wrap().dir(&mut app, Dir::Right, 1);
+            }
+            */
+        }
+
+        //render(&app);
     }
 
     raw_mode(false);
