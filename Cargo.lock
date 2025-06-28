@@ -5,6 +5,8 @@ version = 4
 [[package]]
 name = "TerimalRtdm"
 version = "0.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b0b7dda43a4139ebea9e10d66fab7367629c5f7893de432a89aab504dfd5c0b4"
 
 [[package]]
 name = "hadrium"

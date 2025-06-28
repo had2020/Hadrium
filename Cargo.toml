@@ -4,4 +4,4 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-TerimalRtdm = { path = "/Users/hadrian/Developer/github_repos/TerimalRtdm" }
+TerimalRtdm = "0.0.4"
