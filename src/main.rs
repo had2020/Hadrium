@@ -25,7 +25,7 @@ enum PrimaryMode {
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let mut stored_file: Vec<String> = vec![];
+    let mut stored_file: Vec<String> = vec![String::new()];
 
     if args.len() > 1 {
         if args[1].contains(".") {
@@ -164,7 +164,65 @@ fn main() {
                 }
 
                 if primary_mode == PrimaryMode::InsertMode {
-                    stored_file.push(key_pressed(&app));
+                    let collected_press = key_pressed(&app);
+
+                    if app.keypressed == KeyType::Backspace {
+
+                    } else if app.keypressed == KeyType::Enter {
+
+                    }
+
+                    let text: &str = match &app.keypressed {
+                        KeyType::Backspace => "",
+                        KeyType::Zero => "0",
+                        KeyType::One => "1",
+                        KeyType::Two => "2",
+                        KeyType::Three => "3",
+                        KeyType::Four => "4",
+                        KeyType::Five => "5",
+                        KeyType::Six => "6",
+                        KeyType::Seven => "7",
+                        KeyType::Eight => "8",
+                        KeyType::Nine => "9",
+                        KeyType::Space => " ",
+                        KeyType::Tab => "   ",
+                        KeyType::Enter => "",
+                        KeyType::ExclamationMark => "!",
+                        KeyType::Quote => break,
+                        KeyType::Hash => "#",
+                        KeyType::Dollar => "$",
+                        KeyType::Percent => "%",
+                        KeyType::Ampersand => "^",
+                        KeyType::Apostrophe => "&",
+                        KeyType::LeftParen => "(",
+                        KeyType::RightParen => ")",
+                        KeyType::Asterisk => "*",
+                        KeyType::Plus => "+",
+                        KeyType::Comma => ",",
+                        KeyType::Minus => "-",
+                        KeyType::Dot => ".",
+                        KeyType::Slash => "/",
+                        KeyType::Colon => ":",
+                        KeyType::Semicolon => ";",
+                        KeyType::LessThan => "<",
+                        KeyType::Equal => "=",
+                        KeyType::GreaterThan => ">",
+                        KeyType::QuestionMark => "?",
+                        KeyType::At => "@",
+                        KeyType::LeftBracket => "{",
+                        KeyType::Backslash => break,
+                        KeyType::RightBracket => "}",
+                        KeyType::Caret => "|",
+                        KeyType::Underscore => "_",
+                        KeyType::Backtick => "",
+                        KeyType::LeftBrace => "[",
+                        KeyType::Pipe => break,
+                        KeyType::RightBrace => "]",
+                        KeyType::Tilde => break,
+                        _ => &collected_press,
+                    };
+
+                    stored_file[0] = format!("{}{}", stored_file[0], text)
 
                     let mut counter = 1;
                     for line in &stored_file {
