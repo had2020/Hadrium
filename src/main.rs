@@ -46,6 +46,84 @@ fn main() {
                 .show(&mut app, "Normal", pos!(0, 0));
 
             loop {
+                if primary_mode == PrimaryMode::InsertMode {
+                    let collected_press = key_pressed(&app);
+
+                    if app.keypressed == KeyType::Backspace {
+                    } else if app.keypressed == KeyType::Enter {
+                    }
+
+                    let mut text: &str = match &app.keypressed {
+                        KeyType::Backspace => "",
+                        KeyType::Zero => "0",
+                        KeyType::One => "1",
+                        KeyType::Two => "2",
+                        KeyType::Three => "3",
+                        KeyType::Four => "4",
+                        KeyType::Five => "5",
+                        KeyType::Six => "6",
+                        KeyType::Seven => "7",
+                        KeyType::Eight => "8",
+                        KeyType::Nine => "9",
+                        KeyType::Space => " ",
+                        KeyType::Tab => "   ",
+                        KeyType::Enter => "",
+                        KeyType::ExclamationMark => "!",
+                        KeyType::Quote => "\"",
+                        KeyType::Hash => "#",
+                        KeyType::Dollar => "$",
+                        KeyType::Percent => "%",
+                        KeyType::Ampersand => "&",
+                        KeyType::Apostrophe => "'",
+                        KeyType::LeftParen => "(",
+                        KeyType::RightParen => ")",
+                        KeyType::Asterisk => "*",
+                        KeyType::Plus => "+",
+                        KeyType::Comma => ",",
+                        KeyType::Minus => "-",
+                        KeyType::Dot => ".",
+                        KeyType::Slash => "/",
+                        KeyType::Colon => ":",
+                        KeyType::Semicolon => ";",
+                        KeyType::LessThan => "<",
+                        KeyType::Equal => "=",
+                        KeyType::GreaterThan => ">",
+                        KeyType::QuestionMark => "?",
+                        KeyType::At => "@",
+                        KeyType::LeftBracket => "{",
+                        KeyType::Backslash => "\\",
+                        KeyType::RightBracket => "}",
+                        KeyType::Caret => "^",
+                        KeyType::Underscore => "_",
+                        KeyType::Backtick => "",
+                        KeyType::LeftBrace => "[",
+                        KeyType::Pipe => "|",
+                        KeyType::RightBrace => "]",
+                        KeyType::Tilde => "~",
+                        _ => &collected_press,
+                    };
+
+                    if text.len() > 1 {
+                        text = "";
+                    }
+
+                    match &app.keypressed {
+                        _ => (),
+                    }
+
+                    stored_file[0] = format!("{}{}", stored_file[0], text);
+
+                    let mut counter = 1;
+                    for line in &stored_file {
+                        Text::new().vanish(false).show(
+                            &mut app,
+                            &stored_file[0],
+                            Pos { x: 0, y: counter },
+                        );
+                        counter += 1;
+                    }
+                }
+
                 // Normal mode
                 if Key::o().pressed(&mut app, KeyType::Esc) {
                     app.enable_f_row_and_arrow = true;
@@ -160,78 +238,6 @@ fn main() {
                     }
                     if Key::o().no_clear().pressed(&mut app, KeyType::RightArrow) {
                         Mov::cur().wrap().dir(&mut app, Dir::Right, 1);
-                    }
-                }
-
-                if primary_mode == PrimaryMode::InsertMode {
-                    let collected_press = key_pressed(&app);
-
-                    if app.keypressed == KeyType::Backspace {
-
-                    } else if app.keypressed == KeyType::Enter {
-
-                    }
-
-                    let text: &str = match &app.keypressed {
-                        KeyType::Backspace => "",
-                        KeyType::Zero => "0",
-                        KeyType::One => "1",
-                        KeyType::Two => "2",
-                        KeyType::Three => "3",
-                        KeyType::Four => "4",
-                        KeyType::Five => "5",
-                        KeyType::Six => "6",
-                        KeyType::Seven => "7",
-                        KeyType::Eight => "8",
-                        KeyType::Nine => "9",
-                        KeyType::Space => " ",
-                        KeyType::Tab => "   ",
-                        KeyType::Enter => "",
-                        KeyType::ExclamationMark => "!",
-                        KeyType::Quote => break,
-                        KeyType::Hash => "#",
-                        KeyType::Dollar => "$",
-                        KeyType::Percent => "%",
-                        KeyType::Ampersand => "^",
-                        KeyType::Apostrophe => "&",
-                        KeyType::LeftParen => "(",
-                        KeyType::RightParen => ")",
-                        KeyType::Asterisk => "*",
-                        KeyType::Plus => "+",
-                        KeyType::Comma => ",",
-                        KeyType::Minus => "-",
-                        KeyType::Dot => ".",
-                        KeyType::Slash => "/",
-                        KeyType::Colon => ":",
-                        KeyType::Semicolon => ";",
-                        KeyType::LessThan => "<",
-                        KeyType::Equal => "=",
-                        KeyType::GreaterThan => ">",
-                        KeyType::QuestionMark => "?",
-                        KeyType::At => "@",
-                        KeyType::LeftBracket => "{",
-                        KeyType::Backslash => break,
-                        KeyType::RightBracket => "}",
-                        KeyType::Caret => "|",
-                        KeyType::Underscore => "_",
-                        KeyType::Backtick => "",
-                        KeyType::LeftBrace => "[",
-                        KeyType::Pipe => break,
-                        KeyType::RightBrace => "]",
-                        KeyType::Tilde => break,
-                        _ => &collected_press,
-                    };
-
-                    stored_file[0] = format!("{}{}", stored_file[0], text)
-
-                    let mut counter = 1;
-                    for line in &stored_file {
-                        Text::new().vanish(false).show(
-                            &mut app,
-                            &stored_file[0],
-                            Pos { x: 0, y: counter },
-                        );
-                        counter += 1;
                     }
                 }
 
