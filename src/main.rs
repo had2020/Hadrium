@@ -51,7 +51,7 @@ fn main() {
                         Mov::cur().wrap().dir(&mut app, Dir::Down, 1);
                     }
                     if Key::o().no_clear().pressed(&mut app, KeyType::LeftArrow) {
-                        Mov::cur().wrap().dir(&mut app, Dir::Left, 1);
+                        Mov::cur().dir(&mut app, Dir::Left, 1);
                     }
                     if Key::o().no_clear().pressed(&mut app, KeyType::RightArrow) {
                         Mov::cur().freefloat().dir(&mut app, Dir::Right, 1);
@@ -115,7 +115,13 @@ fn main() {
 
                     match &app.keypressed {
                         KeyType::Backspace => {
-                            Mov::cur().block().dir(&mut app, Dir::Left, 1);
+                            Text::new()
+                                .vanish(false)
+                                .show(&mut app, " ", cursor_position);
+                            Mov::cur().dir(&mut app, Dir::Left, 1);
+                        }
+                        KeyType::Space => {
+                            //TODO insert into render
                         }
                         _ => {
                             Text::new()
@@ -217,7 +223,7 @@ fn main() {
                         Mov::cur().block().dir(&mut app, Dir::Down, 1);
                     }
                     if Key::o().no_clear().pressed(&mut app, KeyType::LeftArrow) {
-                        Mov::cur().block().dir(&mut app, Dir::Left, 1);
+                        Mov::cur().dir(&mut app, Dir::Left, 1);
                     }
                     if Key::o().no_clear().pressed(&mut app, KeyType::RightArrow) {
                         Mov::cur().block().dir(&mut app, Dir::Right, 1);
@@ -226,7 +232,7 @@ fn main() {
 
                 if primary_mode == PrimaryMode::InsertMode {
                     if Key::o().no_clear().pressed(&mut app, KeyType::LeftArrow) {
-                        Mov::cur().freefloat().dir(&mut app, Dir::Left, 1);
+                        Mov::cur().dir(&mut app, Dir::Left, 1);
                     }
                 }
 
