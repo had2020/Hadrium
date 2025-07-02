@@ -54,7 +54,7 @@ fn main() {
                         Mov::cur().wrap().dir(&mut app, Dir::Left, 1);
                     }
                     if Key::o().no_clear().pressed(&mut app, KeyType::RightArrow) {
-                        Mov::cur().wrap().dir(&mut app, Dir::Right, 1);
+                        Mov::cur().freefloat().dir(&mut app, Dir::Right, 1);
                     }
 
                     let collected_press = key_pressed(&app);
@@ -112,19 +112,17 @@ fn main() {
                     }
 
                     let cursor_position: Pos = get_cur_pos(&mut app);
-                    Text::new()
-                        .vanish(false)
-                        .show(&mut app, text, cursor_position);
 
-                    Mov::cur().block().dir(&mut app, Dir::Right, 1);
-
-                    if !cursor_position.x < app.letter_grid[cursor_position.y].len() - 2 {
-                        let cursor_position: Pos = get_cur_pos(&mut app);
-                        Text::new().vanish(false).show(
-                            &mut app,
-                            " ",
-                            pos!(cursor_position.x + 1, cursor_position.y),
-                        );
+                    match &app.keypressed {
+                        KeyType::Backspace => {
+                            Mov::cur().block().dir(&mut app, Dir::Left, 1);
+                        }
+                        _ => {
+                            Text::new()
+                                .vanish(false)
+                                .show(&mut app, text, cursor_position);
+                            Mov::cur().freefloat().dir(&mut app, Dir::Right, 1);
+                        }
                     }
                 }
 
@@ -228,7 +226,7 @@ fn main() {
 
                 if primary_mode == PrimaryMode::InsertMode {
                     if Key::o().no_clear().pressed(&mut app, KeyType::LeftArrow) {
-                        Mov::cur().wrap().dir(&mut app, Dir::Left, 1);
+                        Mov::cur().freefloat().dir(&mut app, Dir::Left, 1);
                     }
                 }
 
