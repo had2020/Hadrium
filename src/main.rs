@@ -25,8 +25,6 @@ enum PrimaryMode {
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let mut stored_file: Vec<String> = vec![String::new()];
-
     if args.len() > 1 {
         if args[1].contains(".") {
             let mut primary_mode: PrimaryMode = PrimaryMode::NormalMode;
@@ -49,12 +47,7 @@ fn main() {
                 if primary_mode == PrimaryMode::InsertMode {
                     let collected_press = key_pressed(&app);
 
-                    if app.keypressed == KeyType::Backspace {
-                    } else if app.keypressed == KeyType::Enter {
-                    }
-
                     let mut text: &str = match &app.keypressed {
-                        KeyType::Backspace => "",
                         KeyType::Zero => "0",
                         KeyType::One => "1",
                         KeyType::Two => "2",
@@ -67,7 +60,6 @@ fn main() {
                         KeyType::Nine => "9",
                         KeyType::Space => " ",
                         KeyType::Tab => "   ",
-                        KeyType::Enter => "",
                         KeyType::ExclamationMark => "!",
                         KeyType::Quote => "\"",
                         KeyType::Hash => "#",
@@ -107,21 +99,23 @@ fn main() {
                         text = "";
                     }
 
-                    match &app.keypressed {
-                        _ => (),
-                    }
+                    let cursor_position: Pos = get_cur_pos(&mut app);
+                    Text::new()
+                        .vanish(false)
+                        .show(&mut app, text, cursor_position);
 
-                    stored_file[0] = format!("{}{}", stored_file[0], text);
+                    Mov::cur().block().dir(&mut app, Dir::Right, 1);
 
-                    let mut counter = 1;
-                    for line in &stored_file {
+                    /*
+                    if cursor_position.x < app.letter_grid[cursor_position.y].len() - 2 {
+                        let cursor_position: Pos = get_cur_pos(&mut app);
                         Text::new().vanish(false).show(
                             &mut app,
-                            &stored_file[0],
-                            Pos { x: 0, y: counter },
+                            " ",
+                            pos!(cursor_position.x + 1, cursor_position.y),
                         );
-                        counter += 1;
                     }
+                    */
                 }
 
                 // Normal mode
