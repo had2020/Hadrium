@@ -122,12 +122,22 @@ fn main() {
                         }
                         KeyType::Space => {
                             //TODO insert into render
+                            app.letter_grid[cursor_position.y].insert(
+                                cursor_position.x + 1,
+                                Letter {
+                                    ch: ' ',
+                                    fg_code: 39,
+                                    bg_code: 49,
+                                    style: 0,
+                                    when: LeadOnly::AlwaysShown,
+                                },
+                            );
                         }
                         _ => {
+                            Mov::cur().freefloat().dir(&mut app, Dir::Right, 1);
                             Text::new()
                                 .vanish(false)
                                 .show(&mut app, text, cursor_position);
-                            Mov::cur().freefloat().dir(&mut app, Dir::Right, 1);
                         }
                     }
                 }
